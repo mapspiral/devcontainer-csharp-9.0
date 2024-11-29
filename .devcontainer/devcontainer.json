@@ -1,0 +1,36 @@
+{
+  "name": "C# 9 Development",
+  "dockerFile": "Dockerfile",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2.12.0": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "dotnet.sdk": "/usr/share/dotnet/dotnet"
+      },
+      "extensions": [
+        "ms-dotnettools.csdevkit"
+      ],
+    }
+  },
+  "postCreateCommand": "dotnet --version", // Command to verify the .NET SDK version inside the container
+  "runArgs": [
+    "--user", 
+    "developer",
+    "--cap-add=SYS_PTRACE" // Optional: This is to enable debugging in some containers
+  ],
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind" // Mount the local workspace folder into the container
+  ],
+  "remoteUser": "developer",
+  "remoteEnv": {
+    "DOTNET_CLI_HOME": "/workspace/.dotnet" // Ensure that .NET stores user-specific files in the workspace directory
+  },
+  "forwardPorts": [
+    5000,
+    5001
+  ], // Forward ports for ASP.NET Core apps (example ports)
+  "postStartCommand": "echo 'Development container for C# 9 is ready!'"
+}

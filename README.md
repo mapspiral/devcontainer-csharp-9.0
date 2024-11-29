@@ -1,0 +1,3 @@
+# This repository...
+
+Contains experiments to work with C# code from inside a Dev Container.
